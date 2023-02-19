@@ -10,7 +10,10 @@ function getAllCurrentHabits() {
         habit.dateFrom < DateTime.now() && habit.dateTo > DateTime.now()
     );
 
-    allCurrentHabits[habitArea] = currentHabit.data;
+    allCurrentHabits[habitArea] = {
+      [`Current Habits`]: currentHabit.data,
+      [`Tokens Collected`]: currentHabit.tokens, // hmm we need some persistence here
+    };
   });
 
   return allCurrentHabits;
