@@ -1,7 +1,7 @@
 const { DateTime } = require("luxon");
 const habitStore = require("./habitStore");
 
-function getAllHabits() {
+function getAllCurrentHabits() {
   const allCurrentHabits = {};
 
   Object.keys(habitStore).forEach((habitArea) => {
@@ -16,4 +16,5 @@ function getAllHabits() {
   return allCurrentHabits;
 }
 
-console.log(getAllHabits());
+// This is to show the daily todos, so dont have to think about it ages
+console.log(getAllCurrentHabits());
