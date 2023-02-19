@@ -5,7 +5,7 @@ function getAllCurrentHabits() {
   const allCurrentHabits = {};
 
   Object.keys(habitStore).forEach((habitArea) => {
-    const [currentHabit] = habitStore[habitArea].filter(
+    const currentHabit = habitStore[habitArea].find(
       (habit) =>
         habit.dateFrom < DateTime.now() && habit.dateTo > DateTime.now()
     );
