@@ -65,6 +65,9 @@ async function addHabits(habits) {
   });
 }
 
+async function getHabitStatuses() {}
+
 module.exports = {
   addHabits,
+  getHabitStatuses,
 };

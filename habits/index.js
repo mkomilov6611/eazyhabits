@@ -43,6 +43,9 @@ function getAllCurrentHabits() {
   });
 }
 
+//Checks the habit statuses, informs the user about unfinished habits, and checks if the TOKEN can be added for today
+function analyzeStatuses() {}
+
 function startDay() {
   // This is to show the daily todos, so dont have to think about it ages
   printHabits(getRawHabitsObj());
@@ -53,8 +56,10 @@ function startDay() {
 
 function endDay() {
   // We can print the habits statuses, fetch it from Notion
-  // Tokens added
-  // Prizes if achieved
+  const habitStatuses = notionService.getHabitStatuses();
+
+  // * cool stuff *
+  analyzeStatuses(habitStatuses);
 }
 
 module.exports = {
