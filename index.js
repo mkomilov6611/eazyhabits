@@ -1,36 +1,41 @@
-const { DateTime } = require("luxon");
-const fs = require("fs");
+// Configs
+require("dotenv").config();
 
-const habitsJson = fs.readFileSync(__dirname + "/habitStore.json");
-const habitsObj = JSON.parse(habitsJson);
+// External modules
+const yargs = require("yargs");
 
-function printAllCurrentHabits() {
-  console.log("\n-------------------- Welcome Back! 😀 -------------------");
-  console.log("----------- Showing todays habits and all! 📅 -----------\n");
+// Internal modules
+const habits = require("./habits");
 
-  Object.keys(habitsObj).forEach((habitArea) => {
-    const currentHabit = habitsObj[habitArea].find(
-      (habit) =>
-        DateTime.fromISO(habit.dateFrom) < DateTime.now() &&
-        DateTime.fromISO(habit.dateTo) > DateTime.now()
-    );
+yargs.command({
+  command: "start-day",
+  describe: "Start the awesome day",
+  handler: () => {
+    habits.startDay();
+  },
+});
 
-    console.log(`\n${habitArea} Habits 🍉: `, currentHabit.habits);
+yargs.command({
+  command: "end-day",
+  describe: "End the awesome day",
+  handler: () => {
+    const result = habits.endDay();
+    console.log(result);
+  },
+});
 
-    // this is to make it more attractive, self prizes after some tokens collected
-    // ONE SUCCESSFULL DAY = ONE TOKEN
-    console.log("Tokens Collected 💰: ", currentHabit.tokensCollected);
+yargs.command({
+  command: "help",
+  describe: "Show all available commands",
+  handler: () => {
+    yargs.showHelp();
+  },
+});
 
-    // console.log("Your Next Prize: ", currentHabit.allPrizes[currentHabit.prizeIndex].tokensNeeded);
+yargs.fail((msg, err, yargs) => {
+  if (err) throw err; // preserve stack
+  console.error(`Invalid command: ${msg}`);
+  yargs.showHelp();
+});
 
-    // if (currentHabit.tokensCollected === currentHabit.nextPrizeTokens) {
-    //   console.log(`Good job man! Now enjoy your ${currentHabit.allPrizes[currentHabit.prizeIndex]}!`);
-    //   currentHabit.nextPrize =
-    // }
-  });
-
-  console.log("\n----------- Have a good one! ⚽ -----------\n");
-}
-
-// This is to show the daily todos, so dont have to think about it ages
-printAllCurrentHabits();
+yargs.parse();
