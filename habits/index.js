@@ -18,8 +18,8 @@ function printHabits(habitsObj) {
   console.log("\n----------- Have a good one! ⚽ -----------\n");
 }
 
-function getCurrentHabit(allHabits) {
-  return allHabits.find(
+function getCurrentHabit(habits) {
+  return habits.find(
     (habit) =>
       DateTime.fromISO(habit.dateFrom) < DateTime.now() &&
       DateTime.fromISO(habit.dateTo) > DateTime.now()
@@ -37,10 +37,11 @@ function getRawHabitsObj() {
 // List of current habits only, no extra stuff
 function getAllCurrentHabits() {
   const habitsObj = getRawHabitsObj();
-
-  return Object.keys(habitsObj).flatMap((habitArea) => {
-    return getCurrentHabit(habitsObj[habitArea]).habits;
-  });
+  return Object.keys(habitsObj)
+    .flatMap((habitArea) => {
+      return getCurrentHabit(habitsObj[habitArea]).habits;
+    })
+    .sort();
 }
 
 //Checks the habit statuses, informs the user about unfinished habits, and checks if the TOKEN can be added for today
@@ -49,7 +50,6 @@ function analyzeStatuses() {}
 function startDay() {
   // This is to show the daily todos, so dont have to think about it ages
   printHabits(getRawHabitsObj());
-
   // update the notion page with our to-do habits
   notionService.addHabits(getAllCurrentHabits());
 }

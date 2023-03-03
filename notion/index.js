@@ -38,31 +38,41 @@ function generateChildren(habits) {
 async function addHabits(habits) {
   const children = generateChildren(habits);
 
-  await notion.blocks.children.append({
-    block_id: pageId,
-    children: [
-      {
-        object: "block",
-        type: "bulleted_list_item",
-        bulleted_list_item: {
-          rich_text: [
-            {
-              type: "text",
-              text: {
-                content: DateTime.now().toISODate(),
-              },
-              annotations: {
-                bold: true,
-                italic: true,
-                color: "red",
-              },
+  while (true) {
+    try {
+      console.log("Updating notion");
+      await notion.blocks.children.append({
+        block_id: pageId,
+        children: [
+          {
+            object: "block",
+            type: "bulleted_list_item",
+            bulleted_list_item: {
+              rich_text: [
+                {
+                  type: "text",
+                  text: {
+                    content: DateTime.now().toISODate(),
+                  },
+                  annotations: {
+                    bold: true,
+                    italic: true,
+                    color: "red",
+                  },
+                },
+              ],
+              children,
             },
-          ],
-          children,
-        },
-      },
-    ],
-  });
+          },
+        ],
+      });
+
+      break;
+    } catch (error) {
+      console.log("Error when updating notion ", error);
+      continue;
+    }
+  }
 }
 
 async function getHabitStatuses() {}
