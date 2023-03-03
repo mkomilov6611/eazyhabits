@@ -5,21 +5,42 @@
       "dateFrom": "2023-02-19",
       "dateTo": "2023-03-19",
       "habits": ["LeetCode", "Medium"],
-      "tokensCollected": "0"
+      "tokensCollected": "6",
+      "prizes": [
+        {
+          "name": "Some gift",
+          "tokensRequired": "15",
+          "isGiven": "false"
+        }
+      ]
     },
     {
       "level": 2,
       "dateFrom": "2023-03-20",
       "dateTo": "2023-04-20",
       "habits": ["LeetCode Medium", "Medium 2 articles"],
-      "tokensCollected": "0"
+      "tokensCollected": "0",
+      "prizes": [
+        {
+          "name": "Some gift",
+          "tokensRequired": "15",
+          "isGiven": "false"
+        }
+      ]
     },
     {
       "level": 3,
       "dateFrom": "2023-04-21",
       "dateTo": "2023-05-21",
       "habits": ["LeetCode Hard", "Medium: write article"],
-      "tokensCollected": "0"
+      "tokensCollected": "0",
+      "prizes": [
+        {
+          "name": "Some gift",
+          "tokensRequired": "15",
+          "isGiven": "false"
+        }
+      ]
     }
   ],
   "Rich": [

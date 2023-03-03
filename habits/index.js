@@ -13,6 +13,17 @@ function printHabits(habitsObj) {
     // this is to make it more attractive, self prizes after some tokens collected
     // ONE SUCCESSFULL DAY = ONE TOKEN
     console.log("Tokens Collected 💰: ", currentHabit.tokensCollected);
+
+    // show the prize if there is
+    const applicablePrize = currentHabit.prizes.find(
+      (prize) =>
+        Number(prize.tokensRequired) <= Number(currentHabit.tokensCollected) &&
+        prize.isGiven === String(false)
+    );
+
+    if (applicablePrize) {
+      console.log("HooRayyy - you gote the prize!!! ", applicablePrize.name);
+    }
   });
 
   console.log("\n----------- Have a good one! ⚽ -----------\n");
@@ -51,7 +62,7 @@ function startDay() {
   // This is to show the daily todos, so dont have to think about it ages
   printHabits(getRawHabitsObj());
   // update the notion page with our to-do habits
-  notionService.addHabits(getAllCurrentHabits());
+  // notionService.addHabits(getAllCurrentHabits());
 }
 
 function endDay() {
