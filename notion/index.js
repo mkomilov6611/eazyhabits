@@ -36,6 +36,7 @@ function generateChildren(habits) {
 // This is to add daily habits to our habit tracker product (Notion in our case)
 // Will be run when starting the day
 async function addHabits(habits) {
+  return;
   const children = generateChildren(habits);
 
   while (true) {

@@ -4,15 +4,17 @@ const notionService = require("../notion");
 
 function printHabits(habitsObj) {
   console.log("\n-------------------- Welcome Back! 😀 -------------------");
-  console.log("----------- Showing todays habits and all! 📅 -----------\n");
+  console.log("----------- Showing todays habits and all! 📅 -----------");
 
   Object.keys(habitsObj).forEach((habitArea) => {
     const currentHabit = getCurrentHabit(habitsObj[habitArea]);
 
-    console.log(`\n${habitArea} Habits 🍉: `, currentHabit.habits);
-    // this is to make it more attractive, self prizes after some tokens collected
-    // ONE SUCCESSFULL DAY = ONE TOKEN
-    console.log("Tokens Collected 💰: ", currentHabit.tokensCollected);
+    console.log(`\n--------------- ${habitArea} Habits 🍉: ---------------\n`);
+    currentHabit.habits.forEach((habit) => {
+      console.log(`${habit}`);
+    });
+    // this is to make it more attractive, self prizes after some tokens collected - ONE SUCCESSFULL DAY = ONE TOKEN
+    console.log("\nTokens Collected 💰: ", currentHabit.tokensCollected);
 
     // show the prize if there is
     const applicablePrize = currentHabit.prizes.find(
