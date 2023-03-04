@@ -62,7 +62,7 @@ function startDay() {
   // This is to show the daily todos, so dont have to think about it ages
   printHabits(getRawHabitsObj());
   // update the notion page with our to-do habits
-  // notionService.addHabits(getAllCurrentHabits());
+  notionService.addHabits(getAllCurrentHabits());
 }
 
 function endDay() {
