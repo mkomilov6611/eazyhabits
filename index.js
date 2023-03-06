@@ -19,8 +19,7 @@ yargs.command({
   command: "end-day",
   describe: "End the awesome day",
   handler: () => {
-    const result = habits.endDay();
-    console.log(result);
+    habits.endDay();
   },
 });
 

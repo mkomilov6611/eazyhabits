@@ -60,16 +60,16 @@ function getAllCurrentHabits() {
 //Checks the habit statuses, informs the user about unfinished habits, and checks if the TOKEN can be added for today
 function analyzeStatuses() {}
 
-function startDay() {
+async function startDay() {
   // This is to show the daily todos, so dont have to think about it ages
   printHabits(getRawHabitsObj());
   // update the notion page with our to-do habits
-  notionService.addHabits(getAllCurrentHabits());
+  await notionService.addHabits(getAllCurrentHabits());
 }
 
-function endDay() {
+async function endDay() {
   // We can print the habits statuses, fetch it from Notion
-  const habitStatuses = notionService.getHabitStatuses();
+  const habitStatuses = await notionService.getHabitStatuses();
 
   // * cool stuff *
   analyzeStatuses(habitStatuses);
