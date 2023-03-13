@@ -58,7 +58,24 @@ function getAllCurrentHabits() {
 }
 
 //Checks the habit statuses, informs the user about unfinished habits, and checks if the TOKEN can be added for today
-function analyzeStatuses() {}
+function analyzeStatuses(habitStatuses) {
+  console.log({ habitStatuses });
+
+  const unfinishedHabits = habitStatuses
+    .filter((hStatus) => !hStatus.checked)
+    .map((hStatus) => hStatus.rich_text[0].plain_text);
+
+  // some stuff are not finished, and we cant close the day
+  if (unfinishedHabits.length) {
+    console.log(
+      "Please do the following items before finishing the day!",
+      unfinishedHabits
+    );
+  } else {
+    // TODO
+    addTokensForToday();
+  }
+}
 
 async function startDay() {
   // This is to show the daily todos, so dont have to think about it ages

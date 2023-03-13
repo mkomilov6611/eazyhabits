@@ -76,32 +76,39 @@ async function addHabits(habits) {
 }
 
 async function getHabitStatuses() {
-  // to search for our block, we can use the text, which is today ISO
-  const blockText = DateTime.now().toISODate();
+  while (true) {
+    try {
+      // to search for our block, we can use the text, which is today ISO
+      const blockText = DateTime.now().toISODate();
 
-  const queryResponse = await notion.blocks.children.list({
-    block_id: pageId,
-    filter: {
-      property: "object",
-      value: "block",
-    },
-    query: blockText,
-  });
+      const queryResponse = await notion.blocks.children.list({
+        block_id: pageId,
+        filter: {
+          property: "object",
+          value: "block",
+        },
+        query: blockText,
+      });
 
-  // the query of ours `blockText` is not very accurate for Notion, so it gets them all
-  // like 2023-01-11 or 2023-01-12, so we have to double check the created time
-  const todaysHabitsBlockID = queryResponse.results.find((result) =>
-    result.created_time.includes(blockText)
-  )?.id;
+      // the query of ours `blockText` is not very accurate for Notion, so it gets them all
+      // like 2023-01-11 or 2023-01-12, so we have to double check the created time
+      const todaysHabitsBlockID = queryResponse.results.find((result) =>
+        result.created_time.includes(blockText)
+      )?.id;
 
-  const todaysHabits = await notion.blocks.children
-    .list({
-      block_id: todaysHabitsBlockID,
-      page_size: 25,
-    })
-    .then((response) => response.results.map((habit) => habit.to_do));
+      const todaysHabits = await notion.blocks.children
+        .list({
+          block_id: todaysHabitsBlockID,
+          page_size: 25,
+        })
+        .then((response) => response.results.map((habit) => habit.to_do));
 
-  return todaysHabits;
+      return todaysHabits;
+    } catch (error) {
+      console.log("Error when getting notion statusess", error);
+      continue;
+    }
+  }
 }
 
 module.exports = {
