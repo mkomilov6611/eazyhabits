@@ -57,10 +57,32 @@ function getAllCurrentHabits() {
     .sort();
 }
 
+function addTokensForToday() {
+  const habitsObj = getRawHabitsObj();
+
+  const updatedHabitsObj = Object.values(habitsObj).map((habitArea) => {
+    return habitArea.map((habit) => {
+      const isCurrentHabit =
+        DateTime.fromISO(habit.dateFrom) < DateTime.now() &&
+        DateTime.fromISO(habit.dateTo) > DateTime.now();
+
+      if (isCurrentHabit) {
+        habit.tokensCollected = Number(habit.tokensCollected) + 1;
+      }
+
+      return habit;
+    });
+  });
+
+  // pretty write to the file
+  fs.writeFileSync(
+    __dirname + "/habitStore.json",
+    JSON.stringify(updatedHabitsObj, null, 2)
+  );
+}
+
 //Checks the habit statuses, informs the user about unfinished habits, and checks if the TOKEN can be added for today
 function analyzeStatuses(habitStatuses) {
-  console.log({ habitStatuses });
-
   const unfinishedHabits = habitStatuses
     .filter((hStatus) => !hStatus.checked)
     .map((hStatus) => hStatus.rich_text[0].plain_text);
@@ -71,10 +93,10 @@ function analyzeStatuses(habitStatuses) {
       "Please do the following items before finishing the day!",
       unfinishedHabits
     );
-  } else {
-    // TODO
-    addTokensForToday();
+    return;
   }
+
+  addTokensForToday();
 }
 
 async function startDay() {
